@@ -3,8 +3,6 @@ extends Area3D
 @export var velocidad_carga: float = 25.0 
 var camioneta_en_zona = null
 var hud_sistema = null # Referencia en caché para no buscarla a cada frame
-@onready var consola = $HUD/Consola
-var timer_mensaje: SceneTreeTimer = null
 
 func _ready():
 	set_process(false)
@@ -44,14 +42,3 @@ func _process(delta):
 				hud_sistema.mostrar_mensaje("REPOSTANDO... %d L" % litros)
 		else:
 			if hud_sistema: hud_sistema.mostrar_mensaje("TANQUE LLENO")
-
-# Función que ya usaba la gasolinera
-func mostrar_mensaje(texto: String):
-	consola.text = texto
-	_limpiar_consola_despues(4.0)
-
-func _limpiar_consola_despues(segundos: float):
-	if timer_mensaje: return # Evitar múltiples timers
-	await get_tree().create_timer(segundos).timeout
-	consola.text = ""
-	

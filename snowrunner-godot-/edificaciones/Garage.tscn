@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bps02k7rgu5tg"]
+
+[ext_resource type="Script" uid="uid://bjlhihnxht1vr" path="res://Garage.gd" id="1_0lqmt"]
+[ext_resource type="Script" uid="uid://dg2qnpqjy7sc" path="res://UI_Garaje.gd" id="2_mbw23"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0lqmt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mbw23"]
+size = Vector3(3.9821777, 2.7476196, 3.9262695)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_0lqmt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." groups=["ui_garaje"]]
+script = ExtResource("2_mbw23")
+
+[node name="LabelDinero" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_top = 153.0
+offset_right = 217.0
+offset_bottom = 184.0
+text = "Comprar Camioneta Heavy"
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.28328, 3.64435)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33209187, 0)
+mesh = SubResource("BoxMesh_0lqmt")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006225586, 0.37826538, 0.040283203)
+shape = SubResource("BoxShape3D_mbw23")
+
+[connection signal="pressed" from="CanvasLayer/Button" to="CanvasLayer" method="_on_boton_comprar_heavy_pressed"]

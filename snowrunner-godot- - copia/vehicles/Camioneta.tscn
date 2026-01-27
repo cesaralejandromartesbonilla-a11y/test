@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhtqc4clpsd6"]
+[gd_scene load_steps=12 format=3 uid="uid://bhtqc4clpsd6"]
 
 [ext_resource type="Script" uid="uid://bkkis53vqxipq" path="res://scipts/Camioneta.gd" id="1_jp4qg"]
 [ext_resource type="Script" uid="uid://cgfvxv3t4trbr" path="res://vehicles/spring_arm_3d.gd" id="2_loyei"]
 [ext_resource type="Script" uid="uid://58ogetcrcafn" path="res://vehicles/canvas_layer.gd" id="3_efbf6"]
+[ext_resource type="Texture2D" uid="uid://cskw882fffi36" path="res://addons/grappling_hook_3d/example/hook_availible.png" id="4_fmq2h"]
 [ext_resource type="Script" uid="uid://68aq3chbg44i" path="res://addons/grappling_hook_3d/src/hook_controller.gd" id="5_26rbd"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_r0s5i"]
@@ -31,10 +32,7 @@ script = ExtResource("1_jp4qg")
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 1)
 use_as_steering = true
-suspension_stiffness = 40.0
-suspension_max_force = 15000.0
-damping_compression = 1.5
-damping_relaxation = 3.0
+suspension_stiffness = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleWheel3D"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.035705566, 0)
@@ -47,10 +45,7 @@ mesh = SubResource("CylinderMesh_loyei")
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 1)
 use_as_steering = true
-suspension_stiffness = 40.0
-suspension_max_force = 15000.0
-damping_compression = 1.5
-damping_relaxation = 3.0
+suspension_stiffness = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleWheel3D2"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.035705566, 0)
@@ -62,10 +57,7 @@ mesh = SubResource("CylinderMesh_loyei")
 
 [node name="Trasera" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, -1)
-suspension_stiffness = 40.0
-suspension_max_force = 15000.0
-damping_compression = 1.5
-damping_relaxation = 3.0
+suspension_stiffness = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Trasera"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.035705566, 0)
@@ -77,10 +69,7 @@ mesh = SubResource("CylinderMesh_loyei")
 
 [node name="Trasera2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, -1)
-suspension_stiffness = 40.0
-suspension_max_force = 15000.0
-damping_compression = 1.5
-damping_relaxation = 3.0
+suspension_stiffness = 30.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Trasera2"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.035705566, 0)
@@ -98,7 +87,7 @@ mesh = SubResource("BoxMesh_efbf6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375466, -0.008636475)
 shape = SubResource("BoxShape3D_fmq2h")
 
-[node name="nodo_quinta_rueda" type="Marker3D" parent="."]
+[node name="QuintaRueda" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45263755, -1.0852237)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
@@ -113,12 +102,10 @@ target_position = Vector3(0, 0, -25)
 
 [node name="HUD" type="CanvasLayer" parent="." groups=["hud"]]
 script = ExtResource("3_efbf6")
-nodo_camioneta = NodePath("..")
 
 [node name="Consola" type="Label" parent="HUD"]
 offset_right = 40.0
 offset_bottom = 23.0
-metadata/_edit_use_anchors_ = true
 
 [node name="PanelInstrumentos" type="Control" parent="HUD"]
 layout_mode = 3
@@ -127,29 +114,18 @@ offset_left = 976.0
 offset_top = 512.0
 offset_right = 1016.0
 offset_bottom = 552.0
-metadata/_edit_use_anchors_ = true
 
 [node name="Velocimetro" type="Label" parent="HUD/PanelInstrumentos"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.375
-anchor_top = 1.825
-anchor_right = -1.375
-anchor_bottom = 1.825
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-metadata/_edit_use_anchors_ = true
 
 [node name="Indicador4x4" type="Label" parent="HUD/PanelInstrumentos"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -1.375
-anchor_right = -1.375
+layout_mode = 0
 offset_left = -2.0
 offset_top = 45.0
 offset_right = 38.0
 offset_bottom = 68.0
-metadata/_edit_use_anchors_ = true
 
 [node name="CombustibleBar" type="ProgressBar" parent="HUD/PanelInstrumentos"]
 layout_mode = 0
@@ -157,24 +133,22 @@ offset_left = 12.0
 offset_top = -50.0
 offset_right = 16.0
 offset_bottom = -23.0
+
+[node name="Crosshair" type="TextureRect" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_fmq2h")
 metadata/_edit_use_anchors_ = true
-
-[node name="MarchaLabel" type="Label" parent="HUD/PanelInstrumentos"]
-layout_mode = 0
-offset_top = 43.0
-offset_right = 40.0
-offset_bottom = 66.0
-
-[node name="RPMProgress" type="ProgressBar" parent="HUD/PanelInstrumentos"]
-layout_mode = 0
-offset_right = 4.0
-offset_bottom = 27.0
-
-[node name="IconoDiff" type="Label" parent="HUD/PanelInstrumentos"]
-layout_mode = 0
-offset_top = 83.0
-offset_right = 40.0
-offset_bottom = 106.0
 
 [node name="MarkerFrontal" type="Marker3D" parent="."]
 
@@ -195,5 +169,3 @@ surface_material_override/0 = SubResource("StandardMaterial3D_atooj")
 
 [node name="HookRopeStart" type="Marker3D" parent="Gear0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-
-[node name="Node3D" type="Node3D" parent="."]

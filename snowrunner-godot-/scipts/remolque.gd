@@ -1,38 +1,30 @@
 extends VehicleBody3D
 
-# Referencia a las patas de apoyo (si quieres animarlas luego)
-# @onready var patas = $PatasApoyo 
+# En lugar de @onready, usamos una variable normal para comprobar si existe
+var patas_visuales: Node3D = null
 
-
-func set_acoplado(estado: bool):
-	if estado:
-		print("Remolque: Conectado al sistema eléctrico del camión.")
-		# Aquí podrías subir las patas de apoyo
-		# $PatasApoyo.visible = false
-		
-		# Aumentar un poco el frenado de las ruedas para simular frenos de aire conectados?
-		brake = 0.0 
+func _ready() -> void:
+	# Intentamos buscar el nodo por si existe
+	if has_node("PatasApoyo"):
+		patas_visuales = get_node("PatasApoyo")
 	else:
-		print("Remolque: Desconectado.")
-		# Bajar patas
-		# $PatasApoyo.visible = true
-		
-		# Aplicar freno de estacionamiento automático
-		brake = 1.0 
+		print("AVISO: No se encontró el nodo 'PatasApoyo' en el remolque. Se omitirá la animación de patas.")
 
-var en_barro: bool = false
+	# Frenar al inicio
+	_frenar(true)
 
-func entrar_en_barro(_v, _f, _p):
-	en_barro = true
-	# El remolque solo sufre el peso, no el cálculo de tracción
-	mass *= 1.5 # Simula el peso del lodo pegado
-	for wheel in get_children():
-		if wheel is VehicleWheel3D:
-			wheel.suspension_travel = 0.05 
+func set_conectado(conectado: bool) -> void:
+	if conectado:
+		print("Remolque conectado -> Frenos LIBERADOS")
+		_frenar(false)
+		if patas_visuales: patas_visuales.visible = false
+	else:
+		print("Remolque desconectado -> Frenos ACTIVADOS")
+		_frenar(true)
+		if patas_visuales: patas_visuales.visible = true
 
-func salir_del_barro():
-	en_barro = false
-	mass /= 1.5
-	for wheel in get_children():
-		if wheel is VehicleWheel3D:
-			wheel.suspension_travel = 0.2
+func _frenar(activo: bool) -> void:
+	for w in get_children():
+		if w is VehicleWheel3D:
+			w.brake = 100.0 if activo else 0.0
+			w.engine_force = 0.0
